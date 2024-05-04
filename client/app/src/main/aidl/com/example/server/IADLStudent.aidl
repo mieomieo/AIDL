@@ -1,7 +1,7 @@
 // IADLStudent.aidl
 package com.example.server;
 import com.example.server.model.Student;
-// Declare any non-default types here with import statements
+
 
 interface IADLStudent {
     void addStudent(inout Student student);
@@ -11,9 +11,4 @@ interface IADLStudent {
     List<Student> sortStudentsByAverageGradeOfClassDescending();
     List<Student> searchStudents(String keyword);
     List<Student> getAllStudents();
-
-    /**
-     * Demonstrates some basic types that you can use as parameters
-     * and return values in AIDL.
-     */
 }

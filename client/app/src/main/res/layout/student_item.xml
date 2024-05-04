@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="@dimen/pad_10"
+    android:layout_marginVertical="@dimen/pad_5"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/songCardView"
+        android:padding="@dimen/pad_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/pad_10">
@@ -16,135 +17,162 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/pad_10"
+            android:padding="@dimen/pad_5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/songCardView"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/txtStudentName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/pad_10"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text="@string/student_name"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txtStudentClass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/pad_10"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:text="0332774093"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/pad_10"
+                android:layout_gravity="start"
+                android:gravity="start"
+                android:weightSum="6"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+
+                    android:id="@+id/txtStudentName"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/pad_10"
+                    android:ellipsize="end"
+                    android:layout_gravity="start"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:text="@string/name"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtStudentAge"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/pad_10"
-                    android:gravity="center"
+                    android:gravity="end"
                     android:text="@string/age"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/txtStudentAge"
-                    android:layout_width="match_parent"
+                    android:id="@+id/txtStudentClass"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    android:gravity="end"
+                    android:gravity="start"
                     android:maxLines="1"
                     android:text="@string/student_class"
                     android:textSize="@dimen/txt_16"
                     android:textStyle="bold" />
 
+
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/pad_10"
                 android:orientation="horizontal">
-
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+                <!-- Math Grade -->
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtMathGrade"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/pad_10"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Country"
-                    android:textSize="16sp" />
-
+                    android:text="@string/math"
+                    />
+                <!-- Divider Views -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+                <!-- English Grade -->
                 <TextView
-                    android:id="@+id/txtClientCountry"
-                    android:layout_width="match_parent"
+                    android:id="@+id/txtEnglishGrade"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="end"
-                    android:maxLines="1"
-                    android:text="Viet Nam"
-                    android:textSize="@dimen/txt_16"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/english"
+                    />
+                <!-- Divider Views -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+                <!-- Literature Grade -->
+                <TextView
+                    android:id="@+id/txtLiteratureGrade"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/literature"
+                    />
+                <!-- Divider Views -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+                <!-- Physic Grade -->
+                <TextView
+                    android:id="@+id/txtPhysicGrade"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/physic"
+                    />
+                <!-- Divider Views -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+                <!-- Chemistry Grade -->
+                <TextView
+                    android:id="@+id/txtChemistryGrade"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="@string/chemistry"
+                    />
+                <!-- Divider Views -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
+                <!-- Average -->
+                <TextView
+                    android:id="@+id/txtAverage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/average"
                     android:textStyle="bold" />
 
+                <!-- Divider Views -->
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black" />
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/txtMathGrade"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp" />
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
 
-            <TextView
-                android:id="@+id/txtEnglishGrade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/txtLiteratureGrade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/txtPhysicGrade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/txtChemistryGrade"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/txtAverage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/student_class"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textSize="14sp" />
-
-
-            <ImageView
-                android:id="@+id/btnEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/icons8_edit_24" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

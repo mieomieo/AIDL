@@ -1,6 +1,6 @@
 package interfaces
 
-import com.example.aidlserverexercise.model.Student
+import com.example.server.model.Student
 
 interface IStudentClick {
     fun handleEditStudent(student: Student)

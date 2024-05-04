@@ -1,60 +1,82 @@
 package com.example.client.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.client.R
+import com.example.client.common.areAllFieldsFilled
+import com.example.client.common.areScoresValid
+import com.example.client.databinding.FragmentCreateStudentBinding
+import com.example.client.service.ServiceManager
+import com.example.server.IADLStudent
+import com.example.server.model.Student
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CreateStudentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CreateStudentFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    private lateinit var binding: FragmentCreateStudentBinding
+    private var studentManagerService: IADLStudent? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_create_student, container, false)
+        binding = FragmentCreateStudentBinding.inflate(inflater, container, false)
+        studentManagerService = ServiceManager.getStudentManager()
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CreateStudentFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CreateStudentFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.btnSubmit.setOnClickListener {
+            val allFieldsFilled = areAllFieldsFilled(
+                binding.etName,
+                binding.etAge,
+                binding.etClass,
+                binding.etMath,
+                binding.etEnglish,
+                binding.etLiterature,
+                binding.etPhysic,
+                binding.etChemistry
+            )
+            val scoresValid = areScoresValid(
+                requireContext(),
+                binding.etMath,
+                binding.etEnglish,
+                binding.etLiterature,
+                binding.etPhysic,
+                binding.etChemistry
+            )
+            if (allFieldsFilled && scoresValid) {
+                val student = Student()
+                student.name = binding.etName.text.toString()
+                student.age = binding.etAge.text.toString().toInt()
+                student.className = binding.etClass.text.toString()
+                student.mathScore = binding.etMath.text.toString().toFloat()
+                student.englishScore = binding.etEnglish.text.toString().toFloat()
+                student.literatureScore = binding.etLiterature.text.toString().toFloat()
+                student.physicalScore = binding.etPhysic.text.toString().toFloat()
+                student.chemistryScore = binding.etChemistry.text.toString().toFloat()
+                addStudent(student)
+                val bundle = Bundle()
+                bundle.putBoolean("dataUpdated", true)
+                findNavController().navigate(
+                    R.id.action_createStudentFragment_to_mainFragment,
+                    bundle
+                )
+            } else {
+                Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
+        }
     }
+
+
+    private fun addStudent(student: Student) {
+        studentManagerService?.addStudent(student)
+        Log.d("listStudents", studentManagerService?.allStudents.toString())
+        Toast.makeText(context, "Student added successfully", Toast.LENGTH_SHORT).show()
+    }
+
 }

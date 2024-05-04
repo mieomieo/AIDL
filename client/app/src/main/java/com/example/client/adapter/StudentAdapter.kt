@@ -1,14 +1,18 @@
 package com.example.aidlclientexercise.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.aidlclientexercise.R
-import com.example.aidlserverexercise.model.Student
+import com.example.client.R
+import com.example.server.model.Student
 import interfaces.IStudentClick
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.Locale
 
 class StudentAdapter(private val onStudentClick: IStudentClick? = null) :
     RecyclerView.Adapter<StudentAdapter.HolderStudent>() {
@@ -20,34 +24,35 @@ class StudentAdapter(private val onStudentClick: IStudentClick? = null) :
         return HolderStudent(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: HolderStudent, position: Int) {
         val student = listStudents[position]
-        holder.txtStudentName.text = student.name
-        holder.txtStudentAge.text = student.age.toString()
-        holder.txtStudentClass.text = student.className
+        holder.txtStudentName.text = "Name:${student.name}"
+        holder.txtStudentAge.text = "Age:${student.age}"
+        holder.txtStudentClass.text = "Class:${student.className}"
         holder.txtMathGrade.text =
-            holder.itemView.resources.getString(R.string.math_grade, student.mathGrade.toString())
+            holder.itemView.resources.getString(R.string.math_grade, student.mathScore.toString())
         holder.txtEnglishGrade.text = holder.itemView.resources.getString(
             R.string.english_grade_detail,
-            student.englishGrade.toString()
+            student.englishScore.toString()
         )
         holder.txtLiteratureGrade.text = holder.itemView.resources.getString(
             R.string.literature_grade,
-            student.literatureGrade.toString()
+            student.literatureScore.toString()
         )
         holder.txtPhysicGrade.text = holder.itemView.resources.getString(
             R.string.physic_grade,
-            student.physicalGrade.toString()
+            student.physicalScore.toString()
         )
         holder.txtChemistryGrade.text = holder.itemView.resources.getString(
-            R.string.average,
-            student.chemistryGrade.toString()
+            R.string.chemistry_grade,
+            student.chemistryScore.toString()
         )
-        holder.txtAverage.text =  holder.itemView.resources.getString(
+        holder.txtAverage.text = holder.itemView.resources.getString(
             R.string.average,
-            calculateAverageGrade(student).toString()
+            calculateAverageGrade(student)
         )
-        holder.btnEdit.setOnClickListener {
+        holder.itemView.setOnClickListener {
             onStudentClick?.handleEditStudent(student)
         }
     }
@@ -66,7 +71,6 @@ class StudentAdapter(private val onStudentClick: IStudentClick? = null) :
         val txtPhysicGrade: TextView = itemView.findViewById(R.id.txtPhysicGrade)
         val txtChemistryGrade: TextView = itemView.findViewById(R.id.txtChemistryGrade)
         val txtAverage: TextView = itemView.findViewById(R.id.txtAverage)
-        val btnEdit: ImageView = itemView.findViewById(R.id.btnEdit)
     }
 
     @Suppress("NotifyDataSetChanged")
@@ -75,10 +79,12 @@ class StudentAdapter(private val onStudentClick: IStudentClick? = null) :
         notifyDataSetChanged()
     }
 
-    private fun calculateAverageGrade(student: Student): Float {
-        return (student.mathGrade + student.englishGrade + student.literatureGrade +
-                student.physicalGrade + student.chemistryGrade) / 5
+    private fun calculateAverageGrade(student: Student): String {
+        val sum = student.mathScore + student.englishScore + student.literatureScore +
+                student.physicalScore + student.chemistryScore
+        val average = sum / 5f
+        val decimalFormat = DecimalFormat("#.##", DecimalFormatSymbols(Locale.US))
+        return decimalFormat.format(average)
     }
-
 
 }

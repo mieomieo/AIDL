@@ -5,37 +5,50 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/pad_10"
-    android:layout_marginVertical="@dimen/pad_10"
+    android:layout_marginVertical="@dimen/pad_5"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txtSearchName"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/student_name"
-        android:textColor="@color/black"
-        android:textSize="@dimen/txt_18"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/pad_10"
+        tools:ignore="MissingConstraints">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/txtSearchClass"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/student_class"
-        android:textColor="@color/black"
-        android:textSize="@dimen/txt_18"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/txtSearchName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center|start"
+                android:maxLines="1"
+                android:text="@string/name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtSearchClass"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center|end"
+                android:maxLines="1"
+                android:padding="@dimen/pad_10"
+                android:text="@string/student_class"
+                android:textColor="@color/black"
+                android:textSize="@dimen/txt_18"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

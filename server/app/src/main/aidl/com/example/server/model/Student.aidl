@@ -3,6 +3,7 @@ package com.example.server.model;
 
 // Declare any non-default types here with import statements
 parcelable Student {
+    int id;
     String name;
     int age;
     String className;

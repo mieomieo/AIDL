@@ -1,7 +1,6 @@
 // IADLStudent.aidl
 package com.example.server;
 import com.example.server.model.Student;
-// Declare any non-default types here with import statements
 
 interface IADLStudent {
     void addStudent(inout Student student);

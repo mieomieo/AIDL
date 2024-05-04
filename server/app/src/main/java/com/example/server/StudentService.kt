@@ -6,6 +6,7 @@ import android.util.Log
 import com.example.server.model.Student
 
 class StudentService: Service() {
+    private var currentId: Int = 1
     private val listStudents = mutableListOf<Student>()
     private val listStudentsOriginal = mutableListOf<Student>()
 
@@ -15,14 +16,18 @@ class StudentService: Service() {
         }
 
         override fun addStudent(student: Student?) {
-            student?.let { listStudents.add(it) }
-            student?.let { listStudentsOriginal.add(it) }
+            student?.let {
+                it.id = currentId
+                listStudents.add(it)
+                listStudentsOriginal.add(it)
+                currentId++
+            }
         }
 
         override fun updateStudent(student: Student?) {
             student?.let {
                 val index = listStudentsOriginal.indexOfFirst { existingStudent ->
-                    existingStudent.name == student.name
+                    existingStudent.id == student.id
                 }
                 if (index != -1) {
                     listStudentsOriginal[index] = student
@@ -77,7 +82,7 @@ class StudentService: Service() {
 
     fun Student.calculateAverageGrade(): Float {
         val totalGrades =
-            listOf(mathGrade, englishGrade, literatureGrade, physicalGrade, chemistryGrade).sum()
+            listOf(mathScore, englishScore, literatureScore, physicalScore, chemistryScore).sum()
         return totalGrades / 5
     }
 

@@ -1,6 +1,6 @@
 package interfaces
 
-import com.example.server.model.Student
+import com.example.server.Student
 
 interface IStudentClick {
     fun handleEditStudent(student: Student)

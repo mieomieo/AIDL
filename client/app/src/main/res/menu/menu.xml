@@ -9,8 +9,4 @@
     <item
         android:id="@+id/option_sort_average_of_class"
         android:title="@string/by_average_of_class" />
-
-    <item
-        android:id="@+id/option_sort_default"
-        android:title="@string/by_default" />
 </menu>

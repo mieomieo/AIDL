@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.client.R
-import com.example.server.model.Student
+import com.example.server.Student
 import interfaces.IStudentClick
 
 class StudentSearchAdapter(private val onStudentClick: IStudentClick? = null) :

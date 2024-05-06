@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.client.R
-import com.example.server.model.Student
+import com.example.server.Student
 import interfaces.IStudentClick
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols

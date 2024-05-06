@@ -27,7 +27,7 @@
     <string name="literature">Literature</string>
     <string name="physic">Physic</string>
     <string name="chemistry">Chemistry</string>
-    <string name="average">Avg:\n%s</string>
+    <string name="average">Avg\n%s</string>
     <string name="cancel">Cancel</string>
     <string name="submit">Submit</string>
     <string name="update_student">Update Student</string>

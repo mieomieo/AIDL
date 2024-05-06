@@ -1,89 +1,73 @@
 package com.example.server
+
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
-import com.example.server.model.Student
+import androidx.room.Room
+import com.example.server.dao.StudentDao
+import com.example.server.database.StudentDatabase
+import com.example.server.Student
+import com.example.server.repository.StudentRepository
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class StudentService: Service() {
-    private var currentId: Int = 1
-    private val listStudents = mutableListOf<Student>()
-    private val listStudentsOriginal = mutableListOf<Student>()
+@AndroidEntryPoint
+class StudentService : Service() {
+
+    @Inject
+    lateinit var studentRepository: StudentRepository
+
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    override fun onBind(intent: Intent): IBinder {
+        Log.e("bind service", "runnnnnnnnnnnnnnnnnn")
+        return studentManagerBinder;
+    }
 
     private val studentManagerBinder = object : IADLStudent.Stub() {
-        override fun getAllStudents(): List<Student> {
-            return listStudentsOriginal
-        }
 
-        override fun addStudent(student: Student?) {
-            student?.let {
-                it.id = currentId
-                listStudents.add(it)
-                listStudentsOriginal.add(it)
-                currentId++
+
+        override fun addStudent(student: Student) {
+            coroutineScope.launch {
+                student.let {
+                    studentRepository.addStudent(it)
+                }
             }
         }
 
         override fun updateStudent(student: Student?) {
-            student?.let {
-                val index = listStudentsOriginal.indexOfFirst { existingStudent ->
-                    existingStudent.id == student.id
-                }
-                if (index != -1) {
-                    listStudentsOriginal[index] = student
+            coroutineScope.launch {
+                student?.let {
+                    studentRepository.updateStudent(it)
                 }
             }
         }
 
-        override fun getStudentsSortedByName(): MutableList<Student> {
-            return listStudents.sortedBy { it.name }.toMutableList()
+        override fun getAllStudents(): List<Student> {
+            return studentRepository.getAllStudents()
         }
 
-        override fun getStudentsSortedByAverageGradeDescending(): MutableList<Student> {
-            return listStudents
-                .sortedByDescending { it.calculateAverageGrade() }
-                .toMutableList()
+        override fun getStudentsSortedByName(): List<Student> {
+            return studentRepository.getStudentsSortedByName()
         }
 
-        override fun sortStudentsByAverageGradeOfClassDescending(): MutableList<Student> {
-            val sortedList = mutableListOf<Student>()
-            val classMap = mutableMapOf<String, MutableList<Student>>()
-
-            listStudentsOriginal.forEach { student ->
-                if (classMap.containsKey(student.className)) {
-                    classMap[student.className]?.add(student)
-                } else {
-                    classMap[student.className] = mutableListOf(student)
-                }
-            }
-
-            // Sắp xếp học viên trong từng lớp theo điểm trung bình giảm dần và thêm vào danh sách sắp xếp
-            classMap.values.forEach { studentsInClass ->
-                val sortedStudentsInClass =
-                    studentsInClass.sortedByDescending { it.calculateAverageGrade() }
-                sortedList.addAll(sortedStudentsInClass)
-            }
-
-            // Sắp xếp lại danh sách lớp theo điểm trung bình giảm dần
-            sortedList.sortByDescending { it.calculateAverageGrade() }
-            Log.d("Heheeee", sortedList.toString())
-            return sortedList
+        override fun getStudentsSortedByAverageGradeDescending(): List<Student> {
+            return studentRepository.getStudentsSortedByAverageGradeDescending()
         }
 
-        override fun searchStudents(keyword: String?): MutableList<Student> {
-            return listStudents.filter { it.name.contains(keyword ?: "", ignoreCase = true) }
-                .toMutableList()
+        override fun getStudentsSortedByAverageGradeOfClassDescending(): List<Student> {
+            return studentRepository.getStudentsSortedByAverageGradeOfClassDescending()
         }
+
+        override fun searchStudents(query: String?): List<Student> {
+            return studentRepository.searchStudents(query!!)
+        }
+
+
     }
-
-    override fun onBind(intent: Intent): IBinder {
-        return studentManagerBinder;
-    }
-
-    fun Student.calculateAverageGrade(): Float {
-        val totalGrades =
-            listOf(mathScore, englishScore, literatureScore, physicalScore, chemistryScore).sum()
-        return totalGrades / 5
-    }
-
 }
+
+

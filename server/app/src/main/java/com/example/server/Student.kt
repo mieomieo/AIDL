@@ -1,4 +1,4 @@
-package com.example.server.model
+package com.example.server
 
 import android.os.Parcelable
 import androidx.room.Entity

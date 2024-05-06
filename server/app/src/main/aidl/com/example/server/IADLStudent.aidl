@@ -1,18 +1,12 @@
 // IADLStudent.aidl
 package com.example.server;
-import com.example.server.model.Student;
-
+parcelable Student;
 interface IADLStudent {
-    void addStudent(inout Student student);
-    void updateStudent(inout Student student);
+    void addStudent(in Student student);
+    void updateStudent(in Student student);
     List<Student> getStudentsSortedByName();
     List<Student> getStudentsSortedByAverageGradeDescending();
-    List<Student> sortStudentsByAverageGradeOfClassDescending();
+    List<Student> getStudentsSortedByAverageGradeOfClassDescending();
     List<Student> searchStudents(String keyword);
     List<Student> getAllStudents();
-
-    /**
-     * Demonstrates some basic types that you can use as parameters
-     * and return values in AIDL.
-     */
 }
